@@ -1,0 +1,95 @@
+export const plans = [
+  {
+    id: 'lite',
+    name: 'ATS Lite',
+    price: 0,
+    period: 'GRATUITO',
+    features: [
+      {
+        text: 'Criação e anúncio',
+        highlight: 'ilimitado',
+        suffix: 'de vagas',
+      },
+      {
+        text: 'Teste de perfil comportamental ilimitado',
+      },
+      {
+        text: 'Processo seletivo com método ágil',
+      },
+      {
+        text: 'Vaga anunciada no Linkedin de forma automática',
+      },
+    ],
+  },
+  {
+    id: 'recruiter',
+    name: 'ATS Recruiter',
+    price: 199.9,
+    period: '/mês',
+    features: [
+      'Gestão completa de vagas',
+      'Acessos de Recrutador, Gestor e Administrador',
+      'Funil de processo seletivo personalizável no modo ágil',
+      'Assistente de entrevista virtual de entrevistas',
+      'I.A. para descrição de cargos',
+      'Teste de fit cultural',
+      'Teste comportamental DISC',
+      'Teste técnico de hard skills',
+      'Match comportamental',
+      'Conexão com o Linkedin',
+      'Auto hunting',
+      'Mensagens automáticas no processo seletivo',
+    ],
+  },
+  {
+    id: 'gestao',
+    name: 'Gestão de pessoas 360°',
+    price: 499.9,
+    period: '/mês',
+    features: [
+      'Gestão completa do colaborador',
+      'Retenção dos talentos',
+      'PDI - Plano de desenvolvimento individual',
+      'Avaliações de Desempenho',
+      'Pesquisa de clima - Avaliação de Humor empresarial',
+      'Teste de fit cultural',
+      'Jornada do Colaborador, com mapeamento e registro de ocorrências',
+      'Registro de feedback',
+      'Calendário feedback',
+    ],
+  },
+  {
+    id: 'universidade',
+    name: 'Universidade Corporativa 360°',
+    price: 14.99,
+    isPerUser: true,
+    period: '/por usuário*',
+    features: [
+      'Plataforma com mais de 1300 cursos',
+      '45 áreas de atuação',
+      'Cursos de idiomas',
+      'Trilhas de conhecimento',
+      'Certificado 100% online e válido para todo Brasil',
+      'Relatórios completos de usabilidade',
+      'Gamificação',
+    ],
+    observation: '*mínimo de 20 usuários',
+  },
+  {
+    id: 'plataforma',
+    name: 'Plataforma 360°',
+    price: 799.9,
+    period: '/mês',
+    highlightWords: ['RECRUITER', 'GESTÃO DE PESSOAS 360'],
+    features: [
+      {
+        text: 'Todas as funcionalidades do plano',
+        highlight: 'RECRUITER',
+      },
+      {
+        text: 'Todas as funcionalidades do plano',
+        highlight: 'GESTÃO DE PESSOAS 360',
+      },
+    ],
+  },
+]

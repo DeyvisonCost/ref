@@ -1,0 +1,71 @@
+trigger:
+  branches:
+    include:
+      - develop
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  S3_BUCKET_DEV: 'refuturiza-ui-b2b-develop'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: 'Use Node.js 20.x'
+
+  # Verifica se yarn.lock existe para decidir o gerenciador de pacotes
+  - script: |
+      if [ -f yarn.lock ]; then
+        echo "Using Yarn"
+        echo "USE_YARN=true" >> $(Pipeline.Workspace)/env.vars
+      else
+        echo "Using NPM"
+        echo "USE_YARN=false" >> $(Pipeline.Workspace)/env.vars
+      fi
+    displayName: 'Check Package Manager'
+
+  # Carrega a variável do gerenciador de pacotes
+  - script: |
+      source $(Pipeline.Workspace)/env.vars
+      if [ "$USE_YARN" = "true" ]; then
+        yarn install
+      else
+        npm install
+      fi
+    displayName: 'Install Dependencies'
+
+  - script: |
+      source $(Pipeline.Workspace)/env.vars
+      if [ "$USE_YARN" = "true" ]; then
+        yarn build
+      else
+        npm run build
+      fi
+    displayName: 'Build React App'
+
+  # Publicar os artifacts gerados no build
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'dist'
+      ArtifactName: 'b2b-refuturiza'
+    displayName: 'Publish Build Artifacts'
+
+  # Fazer upload para o bucket S3
+  - task: S3Upload@1
+    inputs:
+      awsCredentials: 'AWS-CI-CD'
+      regionName: 'sa-east-1'
+      sourceFolder: 'dist'
+      bucketName: 'refuturiza-ui-b2b-develop'
+      targetFolder: ''
+    displayName: 'Upload to S3'
+
+  # Baixar os artifacts publicados
+  - task: DownloadBuildArtifacts@1
+    inputs:
+      downloadPath: '$(System.ArtifactsDirectory)'
+      artifactName: 'b2b-refuturiza'
+    displayName: 'Download Artifacts'
